@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Simple Database</title>
+    
+    <style>
+        body{text-align: center; background-color: darkslategray;}
+        #profilePicture {width: 50%;}
+        #profilePicture2 {width: 50%;}
+        #findDetails1 {float:left; background-color:darkslategray;width: 50%; color: floralwhite;}
+        #findDetails2 {float:left; background-color:darkslategray;width: 50%; color: floralwhite;}
+        /* #profileApp {width: 33%;} */
+        input {width: 120px;}
+    </style>
+</head>
+<body>
+    <div id="banner">
+        <img src="https://raw.githubusercontent.com/jamesallen419/ProfileApp/main/logo-no-background.png">
+
+    </div>
+    <div id="findDetails1">
+        <!-- <h1>Find by ID</h1> -->
+        <!-- <h4>ID</h4> -->
+        <!-- <input id="findID" type="text" value="eFoCfKbBqZdWhLTry1xNjYYdfNT2"> <br><br> -->
+        <!-- <button id="find">FIND</button> -->
+
+        <h3 id="findName" type="text"></h3>
+        <img id="profilePicture" src="">
+        <h3 id="findFood" type="text"></h3>
+        <h3 id="findAnimal" type="text"></h3>
+        <h3 id="findStarsign" type="text"></h3>
+         
+        <br><br>
+
+    </div>
+    
+    <div id="findDetails2">
+        <!-- <h1>Find by ID</h1> -->
+        <!-- <h4>ID</h4> -->
+        <!-- <input id="findID2" type="text" value="j3nyWYN5JnettqRdZjBLPP3rfLO2"> <br><br> -->
+        <!-- <button id="find2">FIND</button> -->
+
+        <h3 id="findName2" type="text"></h3>
+        <img id="profilePicture2" src="">
+        <h3 id="findFood2" type="text"></h3>
+        <h3 id="findAnimal2" type="text"></h3>
+        <h3 id="findStarsign2" type="text"></h3>
+         
+        <br><br>
+
+    </div>
+    <div id="profileApp">
+        <iframe src="https://thunkable.site/w/sNwq91Bl7kwErqPetdoqN" title="Chop Down the Tree Thunkable App" height = 1000 width = 500></iframe>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyArI8du164BvQBrerZtQZ-fjGUc2a9O-r4",
+          authDomain: "profileapp-55181.firebaseapp.com",
+          databaseURL: "https://profileapp-55181-default-rtdb.firebaseio.com",
+          projectId: "profileapp-55181",
+          storageBucket: "profileapp-55181.appspot.com",
+          messagingSenderId: "1067255978153",
+          appId: "1:1067255978153:web:f14f064d7414d24fdf71b8",
+          measurementId: "G-8QVNCLX9XB"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        import {getDatabase, get, ref, child} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+        const db = getDatabase();
+
+        var findID = document.querySelector("#findID");
+        var findName = document.querySelector("#findName");
+        var findFood = document.querySelector("#findFood");
+        var findAnimal = document.querySelector("#findAnimal");
+        var findStarsign = document.querySelector("#findStarsign");
+        var findBtn = document.querySelector("#find");
+
+        var findID2 = document.querySelector("#findID2");
+        var findName2 = document.querySelector("#findName2");
+        var findFood2 = document.querySelector("#findFood2");
+        var findAnimal2 = document.querySelector("#findAnimal2");
+        var findStarsign2 = document.querySelector("#findStarsign2");
+        var findBtn2 = document.querySelector("#find2");
+
+        //function FindData(){
+            const dbref = ref(db);
+
+            get(child(dbref, "eFoCfKbBqZdWhLTry1xNjYYdfNT2"))
+            .then((snapshot)=>{
+                if (snapshot.exists()) {
+                    findName.innerHTML = "Name: " + snapshot.val().name;
+                    findFood.innerHTML = "Favorite Food: " + snapshot.val().food;
+                    findAnimal.innerHTML = "Favorite Animal: " + snapshot.val().animal;
+                    findStarsign.innerHTML = "Starsign: " + snapshot.val().starsign;
+                    const image1= document.querySelector("#profilePicture");
+                    image1.src = snapshot.val().image;
+                } else {
+                    alert("No data found");
+                }
+            })
+            .catch((error)=>{
+                alert(error)
+            })
+        //}
+
+        //function FindData2(){
+            const dbref2 = ref(db);
+
+            get(child(dbref2, "j3nyWYN5JnettqRdZjBLPP3rfLO2"))
+            .then((snapshot)=>{
+                if (snapshot.exists()) {
+                    findName2.innerHTML = "Name: " + snapshot.val().name;
+                    findFood2.innerHTML = "Favorite Food: " + snapshot.val().food;
+                    findAnimal2.innerHTML = "Favorite Animal: " + snapshot.val().animal;
+                    findStarsign2.innerHTML = "Starsign: " + snapshot.val().starsign;
+                    const image2= document.querySelector("#profilePicture2");
+                    image2.src = snapshot.val().image;
+                } else {
+                    alert("No data found");
+                }
+            })
+            .catch((error)=>{
+                alert(error)
+            })
+        //}
+
+        // findBtn.addEventListener('click', FindData);
+        // findBtn2.addEventListener('click', FindData2);
+        
+
+      </script>
+</body>
+</html>
